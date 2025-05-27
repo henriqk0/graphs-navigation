@@ -1,19 +1,25 @@
-# Compiled class file
-*.class
+# Ignore compiled classes
+/bin/
+/target/
 
-# Log file
+# Ignore IDE-specific files (Eclipse, IntelliJ, etc.)
+.idea/
+*.iml
+.vscode/
+
+# Ignore Maven wrapper files (if using Maven wrapper)
+.mvn/
+mvnw
+mvnw.cmd
+
+# Ignore log files
 *.log
 
-# BlueJ files
-*.ctxt
+# Ignore temporary files
+*.tmp
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.nar
+# Ignore txt files
+*.txt
 *.ear
 *.zip
 *.tar.gz

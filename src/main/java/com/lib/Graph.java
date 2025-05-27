@@ -48,4 +48,13 @@ public class Graph<T> {
 
     this.edges[originIndex][destinationIndex] = weight;
   }
+
+  public void displayMatrix(){
+    for (float[] row : this.edges){
+      for (float value : row){
+        System.out.print(value + " ");
+      }
+      System.out.println();
+    }
+  }
 }

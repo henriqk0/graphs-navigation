@@ -1,6 +1,6 @@
 package com.lib;
 
-public class Vertice<T> {
+public class Vertex<T> {
 
   private T value;
 
@@ -12,7 +12,7 @@ public class Vertice<T> {
     this.value = value;
   }
 
-  public Vertice(T value) {
+  public Vertex(T value) {
     this.value = value;
   }
 }

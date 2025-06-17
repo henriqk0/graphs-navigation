@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Graph<T> {
 
-  private final ArrayList<Vertice<T>> vertices; // List of vertices
+  private final ArrayList<Vertex<T>> vertices; // List of vertices
   private final float edges[][]; // Adjacency matrix to represent edges
 
   public Graph(int verticesAmount) {
@@ -12,14 +12,14 @@ public class Graph<T> {
     this.edges = new float[verticesAmount][verticesAmount];
   }
 
-  public Vertice<T> addVertice(T value) {
-    Vertice<T> vertice = new Vertice<>(value);
+  public Vertex<T> addVertex(T value) {
+    Vertex<T> vertex = new Vertex<>(value);
     this.vertices.add(vertice);
     return vertice;
   }
 
-  public int getVerticeIndex(T value) {
-    Vertice<T> v;
+  public int getVertexIndex(T value) {
+    Vertex<T> v;
     for (int i = 0; i < this.vertices.size(); i++) {
       v = this.vertices.get(i);
       if (v.getValue().equals(value)) {
@@ -30,20 +30,20 @@ public class Graph<T> {
   }
 
   public void addEdge(T origin, T destination, float weight) {
-    Vertice<T> originVertice, destinationVertice;
+    Vertex<T> originVertex, destinationVertex;
 
     // Search for origin vertice
-    int originIndex = getVerticeIndex(origin);
+    int originIndex = getVertexIndex(origin);
     if (originIndex == -1){
-      originVertice = addVertice(origin);
-      originIndex = this.vertices.indexOf(originVertice);
+      originVertex = addVertex(origin);
+      originIndex = this.vertices.indexOf(originVertex);
     }
 
     // Search for destination vertice 
-    int destinationIndex = getVerticeIndex(destination);
+    int destinationIndex = getVertexIndex(destination);
     if (destinationIndex == -1){
-      destinationVertice = addVertice(destination);
-      destinationIndex = this.vertices.indexOf(destinationVertice);
+      destinationVertex = addVertex(destination);
+      destinationIndex = this.vertices.indexOf(destinationVertex);
     }
 
     this.edges[originIndex][destinationIndex] = weight;

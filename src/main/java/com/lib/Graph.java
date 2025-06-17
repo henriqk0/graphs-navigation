@@ -14,8 +14,8 @@ public class Graph<T> {
 
   public Vertex<T> addVertex(T value) {
     Vertex<T> vertex = new Vertex<>(value);
-    this.vertices.add(vertice);
-    return vertice;
+    this.vertices.add(vertex);
+    return vertex;
   }
 
   public int getVertexIndex(T value) {

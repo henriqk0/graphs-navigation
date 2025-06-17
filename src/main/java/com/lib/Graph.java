@@ -23,23 +23,23 @@ public class Graph<T> {
     for (int i = 0; i < this.vertices.size(); i++) {
       v = this.vertices.get(i);
       if (v.getValue().equals(value)) {
-        return i; // Return the index of the vertice
+        return i; // Return the index of the vertex
       }
     }
-    return -1; // Return -1 if the vertice is not found
+    return -1; // Return -1 if the vertex is not found
   }
 
   public void addEdge(T origin, T destination, float weight) {
     Vertex<T> originVertex, destinationVertex;
 
-    // Search for origin vertice
+    // Search for origin vertex
     int originIndex = getVertexIndex(origin);
     if (originIndex == -1){
       originVertex = addVertex(origin);
       originIndex = this.vertices.indexOf(originVertex);
     }
 
-    // Search for destination vertice 
+    // Search for destination vertex
     int destinationIndex = getVertexIndex(destination);
     if (destinationIndex == -1){
       destinationVertex = addVertex(destination);
@@ -56,5 +56,14 @@ public class Graph<T> {
       }
       System.out.println();
     }
+  }
+
+  public void dijkstra(Vertex<T> origin, Vertex<T> destination){
+    int[] distances = new int[this.vertices.size()];
+    boolean[] visited = new boolean[this.vertices.size()];
+    int[] parent = new int[this.vertices.size()];
+
+    this.edges.get(this.getVertexIndex(origin.getValue()));
+
   }
 }

@@ -2,6 +2,7 @@ package com.lib;
 
 import java.util.ArrayList;
 
+// TODO: criar uma maneira de printar o grafo a partir dos predecessores, tanto para o dijkstra quanto para a árvore geradora mínima
 public class Graph<T> {
 
   private final ArrayList<Vertex<T>> vertices; // List of vertices
@@ -83,6 +84,14 @@ public class Graph<T> {
     }
   }
 
+  private float[] toFullFloatArray(int lengthArray, int value) {
+    float[] toBeIterable = new float[lengthArray];
+    for (int i = 0; i < lengthArray; i++) {
+      toBeIterable[i] = value;
+    }
+    return toBeIterable;
+  }
+
   public float dijkstra(T origin, T destination) { // assuming that the destination is reachable from the origin vertex
     try {
       int originIndex = getVertexIndex(origin);
@@ -92,8 +101,8 @@ public class Graph<T> {
         throw new Exception();
       }
 
-      float[] distances = toFullDijkstraArray(this.edges.size(), 99999);
-      float[] predecessors = toFullDijkstraArray(this.edges.size(), 0);
+      float[] distances = toFullFloatArray(this.edges.size(), 99999);
+      float[] predecessors = toFullFloatArray(this.edges.size(), 0);
       boolean[] visited = new boolean[this.edges.size()];
 
       distances[originIndex] = 0;
@@ -133,42 +142,45 @@ public class Graph<T> {
     return 0;
   }
 
-  // Prim -- vertex | Kruskal -- edges
-  public ArrayList<ArrayList<Float>> minnimalSpanningTree(){
-    if (this.edges.isEmpty()) return null;
+  // Prim  -> abuso de:  https://www.geeksforgeeks.org/dsa/prims-minimum-spanning-tree-mst-greedy-algo-5/
+  public float minnimalSpanningTree(){
+    if (this.edges.isEmpty()) return 0;
 
     else {
+      float[] weights = toFullFloatArray(this.edges.size(), 99999);
+      float[] predecessors = toFullFloatArray(this.edges.size(), 0);
       boolean[] itsInTree = new boolean[this.edges.size()];
-      int i = 0;
 
-      ArrayList<ArrayList<Float>> minimalTree = this.edges; // Adjacency matrix to represent ending minnimal tree
+      itsInTree[0] = true;
+      predecessors[0] = -1;
 
-      // for (int j = 0; j < this.edges.size(); j++) {
-      //   float minIteration = 9999;
-      //   int z;
-      //   for (z = 0; z < this.edges.size(); j++) {
-      //     if (this.edges.get(j).get(z) < minIteration) {
-      //       minIteration = this.edges.get(j).get(z);
-      //     }
-      //   }
-      //   for (z = 0; z < this.edges.size(); j++) {
-      //     if (this.edges.get(j).get(z) != minIteration) {
-      //       minimalTree.get(j).set(z, null);
-      //     }
-      //   }
-      // }
+      for (int aux = 0; aux < itsInTree.length - 1; aux++) {
 
-      // TODO: Usar recursão e Prim 
+        int indx; float minWeight = 99999;
+        int j = 0;
+        for (indx = 0; indx < itsInTree.length; indx++) {
+          if (itsInTree[indx] == false && this.edges.get(aux).get(indx) < minWeight) {
+            minWeight = weights[indx];
+            j = indx;
+          }
+        }
 
-      return minimalTree;
+        itsInTree[j] = true;
+
+        for (int w = 0; w < itsInTree.length; w++) {
+          if (this.edges.get(j).get(w) > 0 && itsInTree[w] == false &&
+            this.edges.get(j).get(w) < weights[w] ) {
+            predecessors[w] = j;
+            weights[w] = this.edges.get(j).get(w);
+          }
+        }
+      }
+
+      float total = 0;
+      for (float wgt : weights) {
+        total += wgt;
+      }
+      return total;
     }
-  }
-
-  private float[] toFullDijkstraArray(int lengthArray, int value) {
-    float[] toBeIterable = new float[lengthArray];
-    for (int i = 0; i < lengthArray; i++) {
-      toBeIterable[i] = value;
-    }
-    return toBeIterable;
   }
 }

@@ -116,7 +116,7 @@ public class Graph<T> {
     int indexPrimNode = 0;
     for (int i = 0; i < this.edges.size(); i++) {
       // Adds the respective node of the row to the beggining of the string
-      String paths = vertices.get(indexPrimNode).getValue() + ": ";
+      String paths = vertices.get(indexPrimNode).getValue() + " {\n  ";
       for (int j = 0; j < this.edges.size(); j++) {
         float weight = edges.get(i).get(j);
         if (weight != 0) {
@@ -126,7 +126,7 @@ public class Graph<T> {
       if (paths.endsWith(", ")){
         paths = paths.substring(0, paths.length() - 2);
       }
-      System.out.println(paths);
+      System.out.println(paths + "\n" + "}");
       indexPrimNode++;
     } 
   }
@@ -166,10 +166,11 @@ public class Graph<T> {
       int i = originIndex;
       float minDistance = 99999;
 
+      // TODO: Varios testes, para ver se não é necessário, de fato, de usar fila de prioridade, por exemplo
       visited[originIndex] = true;
       while (visited[destinationIndex] == false) { 
 
-        for (int j = 0; j < this.edges.size(); j++ ) { // to pick all weight values from `i` vertex
+        for (int j = 0; j < this.edges.size(); j++) { // to pick all weight values from `i` vertex
           float pathWeight = this.edges.get(i).get(j); 
 
           if (pathWeight != 0) { // existence of an edge to `j`
@@ -180,14 +181,13 @@ public class Graph<T> {
           }
         }
 
+        visited[i] = true; 
         for (int j = 0; j < this.edges.size(); j++) { // pick next vertex with minimal distance before destination
-          if (visited[j] == false && distances[j] < minDistance && j != destinationIndex) {
+          if (visited[j] == false && distances[j] < minDistance) {
             minDistance = distances[j];
             i = j;
           }
         }
-
-        visited[i] = true; // TODO: Consertar o loop infinito do while
       }
 
       int iPredecessors = destinationIndex;

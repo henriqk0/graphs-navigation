@@ -14,7 +14,6 @@ public class RouteManager {
   final Random rand = new Random();
   private Graph<Port> routes = new Graph<>();
 
-
   public Graph<Port> getRoutes() {
     return routes;
   }
@@ -24,14 +23,14 @@ public class RouteManager {
   }
     
   private static final String[] PREFIXES = {
-    "San", "São", "New", "Porto de", "Port", "Cabo de"
+    "New", "Porto de", "Port", "Cabo de", "Terminal de", "Puerto"
   };
 
   private static final String[] SUFFIXES = {
     "Royale", "Harbor", "Xangai", "Vitoria", "Lisboa", "Aveiro", "Porto", "New York",
     "Escocia", "Seturbal", "Flandres", "Salvador", "Bahia", "Cingapura", "Indonesia",
     "Taiwan", "Antuerpia", "Roterda", "Hamburgo", "Petersburgo", "Kiev", "Durban",
-    "Mombasa", "Said", "Luanda", "Colon", "Long Beach"
+    "Mombasa", "Said", "Luanda", "Colon", "Long Beach", "Rosales"
   };
 
   public void readFile(String filePath){
@@ -112,6 +111,7 @@ public class RouteManager {
   }
 
   public void populatePorts(int numPorts) {
+    setRoutes(new Graph<Port>());
     for (int i = 0; i < numPorts; i++) {
       Port port = this.generatePort();
       System.out.println("Nome do porto: " + port.getName());
@@ -128,6 +128,7 @@ public class RouteManager {
 
       for (int j = i+1; j < numPorts; j++) { 
         randomRiskRate = 0 + r.nextFloat() * (20 - 0);
+        randomRiskRate = (float)(((int)(Math.pow(10,2)*randomRiskRate))/Math.pow(10,2)); // to only 2 decimal places
 
         this.routes.addEdge(this.routes.getVertices().get(i).getValue(),
                             this.routes.getVertices().get(j).getValue(),

@@ -15,12 +15,12 @@ public class Menu {
     System.out.println("╠═══════════════════════════════╣               ▐                        ");
     System.out.println("║      Selecione uma opção:     ║             ░▓▐▓▒░                      ");
     System.out.println("║ ───────────────────────────── ║            ░▒▓▐▓▓▓▒▒░                   ");
-    System.out.println("║   1) Criar um mapa            ║           ░▒▓▓▐▓▓▓▓▓▒▒▒░                       ");
-    System.out.println("║   2) Adicionar um destino     ║          ░▒▒▓▓▐▓▓▓▓▓▓▓▒▒▒░░                       ");
-    System.out.println("║   3) Visualizar mapa          ║    ▀█▄▄▄▄▄    ▐       ▄▄▄▄▄▄▄▄▄           ");
-    System.out.println("║   4) Rota global mais segura  ║     ▀████████████████████████         "); // arvore geradora minima
-    System.out.println("║   5) Melhor caminho A->B      ║       ▀██████████████████▀▀           ");
-    System.out.println("║   0) Sair                     ║      «▓▓▓▀▀██████████▀▀▀                ");
+    System.out.println("║  1) Criar um mapa             ║           ░▒▓▓▐▓▓▓▓▓▒▒▒░                       ");
+    System.out.println("║  2) Adicionar um destino      ║          ░▒▒▓▓▐▓▓▓▓▓▓▓▒▒▒░░                       ");
+    System.out.println("║  3) Ver rotas e seus riscos   ║    ▀█▄▄▄▄▄    ▐       ▄▄▄▄▄▄▄▄▄           ");
+    System.out.println("║  4) Rota global mais segura   ║     ▀████████████████████████         "); // arvore geradora minima
+    System.out.println("║  5) Melhor caminho A->B       ║       ▀██████████████████▀▀           ");
+    System.out.println("║  0) Sair                      ║      «▓▓▓▀▀██████████▀▀▀                ");
     System.out.println("╚═══════════════════════════════╝      «╜      ▀▀▀▀                      ");
   }
 

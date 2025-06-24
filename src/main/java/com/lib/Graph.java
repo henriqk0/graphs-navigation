@@ -75,6 +75,29 @@ public class Graph<T> {
       this.edges.get(destinationIndex).set(originIndex, weight); } // Not directed, then add the path back
   }
 
+  // Breadth First Search (Busca em Largura)
+  public void bfs(){
+    boolean visited[] = new boolean[this.vertices.size()];
+    int current = 0;
+    ArrayList<Integer> queue = new ArrayList<>();
+
+    queue.add(current);
+    while (!queue.isEmpty()){
+      current = queue.get(0);
+      queue.remove(0);
+      visited[current] = true;
+      System.out.println(this.vertices.get(current).getValue());
+      for (int dest=0; dest<this.vertices.size(); dest++){
+        // If node is adjacent
+        if (edges.get(current).get(dest) > 0)
+          // If it hasn't been visited e it's not in the queue
+          // add it to the queue
+          if (!visited[dest] && !queue.contains(dest))
+            queue.add(dest);   
+      }
+    }
+  }
+
   public void displayMatrix() {
     for (ArrayList<Float> row : this.edges) {
       for (float value : row) {
@@ -82,6 +105,24 @@ public class Graph<T> {
       }
       System.out.println();
     }
+  }
+
+  public void displayPaths() {
+    int indexPrimNode = 0;
+    for (int i = 0; i < this.edges.size(); i++) {
+      // Adds the respective node of the row to the beggining of the string
+      String paths = vertices.get(indexPrimNode).getValue() + ": ";
+      for (int j = 0; j < this.edges.size(); j++) {
+        if (edges.get(i).get(j) != 0) {
+          paths += vertices.get(j).getValue() + ", ";
+        }
+      }
+      if (paths.endsWith(", ")){
+        paths = paths.substring(0, paths.length() - 2);
+      }
+      System.out.println(paths);
+      indexPrimNode++;
+    } 
   }
 
   private float[] toFullFloatArray(int lengthArray, int value) {

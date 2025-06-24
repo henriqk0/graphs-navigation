@@ -116,7 +116,7 @@ public class RouteManager {
   
   public void bestPath(Port a, Port b) {
     float bestPathSomatory = this.routes.dijkstra(a, b);
-    System.out.println("Nível total de risco: " + bestPathSomatory);
+    System.out.println(String.format("Nível total de risco: %.2f", bestPathSomatory));
   }
 
   public void populatePorts(int numPorts) {

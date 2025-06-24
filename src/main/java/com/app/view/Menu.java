@@ -43,7 +43,7 @@ public class Menu {
         if (opt == 1) {
           // If true, reads a file to generate the graph
           // otherwise, generates a random graph 
-          final boolean RANDOM_GRAPH = false;
+          final boolean RANDOM_GRAPH = true;
 
           if (RANDOM_GRAPH){
             int numPorts = reader.scannerIntRead("Quantos portos o mapa vai possuir?", scanner);

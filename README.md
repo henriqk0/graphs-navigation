@@ -85,10 +85,10 @@ Foi utilizado o **Manus** para a criação do template desta documentação e o 
 
 | Integrante      | Responsabilidades principais                        |
 |------------------|------------------------------------------------------|
-| Gabriel B.       | Estruturação geral da biblioteca, algoritmos        |
-| Guilherme        | Desenvolvimento da interface do app                 |
-| Henrique         | Implementação de algoritmos clássicos               |
-| Miguel           | Testes, integração e uso de IA/LLM                  |
+| Gabriel B.       | ...        |
+| Guilherme        | ...                 |
+| Henrique         | ...               |
+| Miguel           | ...                  |
 
 ---
 

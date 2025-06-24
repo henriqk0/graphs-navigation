@@ -113,8 +113,9 @@ public class Graph<T> {
       // Adds the respective node of the row to the beggining of the string
       String paths = vertices.get(indexPrimNode).getValue() + ": ";
       for (int j = 0; j < this.edges.size(); j++) {
-        if (edges.get(i).get(j) != 0) {
-          paths += vertices.get(j).getValue() + ", ";
+        float weight = edges.get(i).get(j);
+        if (weight != 0) {
+          paths += vertices.get(j).getValue() + "(" + weight + ")" + ", ";
         }
       }
       if (paths.endsWith(", ")){

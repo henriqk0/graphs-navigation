@@ -1,5 +1,7 @@
 package com.app.view;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -37,11 +39,20 @@ public class Menu {
 
         Menu.clearConsole();
 
-        if (opt == 1) { 
+        if (opt == 1) {
+          // If true, reads a file to generate the graph
+          // otherwise, generates a random graph 
+          final boolean RANDOM_GRAPH = true;
 
-          int numPorts = reader.scannerIntRead("Quantos portos o mapa vai possuir?", scanner);
-
-          routeManager.populatePorts(numPorts);
+          if (RANDOM_GRAPH){
+            int numPorts = reader.scannerIntRead("Quantos portos o mapa vai possuir?", scanner);
+            routeManager.populatePorts(numPorts);
+          }
+          else {
+            String filePath = "ports.txt";
+            routeManager.readFile(filePath);
+          }
+      
         }
         else if ( opt == 2 ) { 
           String portName = reader.scannerStrRead("Digite o nome do destino a ser adicionado:", scanner);

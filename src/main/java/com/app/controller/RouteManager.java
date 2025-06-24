@@ -1,5 +1,8 @@
 package com.app.controller;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,6 +13,7 @@ import com.lib.Vertex;
 public class RouteManager {
   final Random rand = new Random();
   private Graph<Port> routes = new Graph<>();
+
 
   public Graph<Port> getRoutes() {
     return routes;
@@ -29,6 +33,36 @@ public class RouteManager {
     "Taiwan", "Antuerpia", "Roterda", "Hamburgo", "Petersburgo", "Kiev", "Durban",
     "Mombasa", "Said", "Luanda", "Colon", "Long Beach"
   };
+
+  public void readFile(String filePath){
+    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+      // Reads the number of ports
+      int numberPorts = Integer.parseInt(reader.readLine());
+
+      for (int i = 0; i < numberPorts; i++) {
+          String portName = reader.readLine();
+          this.routes.addVertex(new Port(portName));
+      }
+
+      // Reads the number of edges
+      int numberEdges = Integer.parseInt(reader.readLine());
+
+      for (int i = 0; i < numberEdges; i++) {
+          String origin = reader.readLine();
+          String destination = reader.readLine();
+          String weightStr = reader.readLine();
+
+          float weight = Float.parseFloat(weightStr);
+
+          this.routes.addEdge(this.routes.getVertices().get(this.routes.getVertexIndex(new Port (origin))).getValue(), 
+                              this.routes.getVertices().get(this.routes.getVertexIndex(new Port (destination))).getValue(), 
+                              weight);
+      }
+
+    } catch (IOException e) {
+        System.err.println("Erro ao ler o arquivo: " + e.getMessage());
+    }
+  }
 
   public static String generateRandomPortNames() {
     Random rand = new Random();
@@ -102,3 +136,4 @@ public class RouteManager {
     }
   }
 }
+

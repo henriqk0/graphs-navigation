@@ -23,6 +23,14 @@ public class Main {
         System.out.println("Índice do vértice 'D': " + grafo.getVertexIndex("D"));
         System.out.println("Índice do vértice 'Z' (inexistente): " + grafo.getVertexIndex("Z"));
 
+        // Testa o método de Busca em Largura
+        System.out.println("Breadth First Search");
+        grafo.bfs();
+
+        // Testa o método Display Paths
+        System.out.println("Mostrar caminhos");
+        grafo.displayPaths();
+
         // Exibe a matriz de adjacência
         System.out.println("\nMatriz de adjacência:");
         grafo.displayMatrix();

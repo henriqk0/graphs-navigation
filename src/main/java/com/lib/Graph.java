@@ -187,11 +187,11 @@ public class Graph<T> {
       predecessors[originIndex] = -1;
      
       int i = originIndex;
-      float minDistance = 99999;
+      float minDistance;
 
-      // TODO: Varios testes, para ver se não é necessário, de fato, de usar fila de prioridade, por exemplo
       visited[originIndex] = true;
-      while (visited[destinationIndex] == false) { 
+      for (int n = 0; n < this.edges.size() && visited[destinationIndex] == false; n++) { // worst case -> n - 1 times
+        minDistance = 99999;
 
         for (int j = 0; j < this.edges.size(); j++) { // to pick all weight values from `i` vertex
           float pathWeight = this.edges.get(i).get(j); 
@@ -213,7 +213,7 @@ public class Graph<T> {
         }
       }
 
-      int iPredecessors = destinationIndex;
+      int iPredecessors = destinationIndex; 
       ArrayList<Integer> destinationsOrdered = new ArrayList<>();
       while (iPredecessors != -1) {
         destinationsOrdered.add(iPredecessors);
@@ -221,11 +221,13 @@ public class Graph<T> {
       }
       Collections.reverse(destinationsOrdered);
 
-      System.out.println("Melhor rota de " + origin + " até " + destination + ":");
-      for (int idx = 0; i < destinationsOrdered.size() - 1; i++) {
-        System.out.println(this.vertices.get(destinationsOrdered.get(idx)) + " -(Perigo: "
-        + this.edges.get(destinationsOrdered.get(idx)).get(destinationsOrdered.get(idx+1)) +")->" 
-        + this.vertices.get(destinationsOrdered.get(idx+1)));
+      System.out.println("Melhor rota de " + origin + " até " + destination + ":" + " " + destinationsOrdered.size());
+      for (int idx = 0; idx < destinationsOrdered.size() - 1; idx++) {
+        int originI = destinationsOrdered.get(idx);
+        int destI = destinationsOrdered.get(idx+1);
+        System.out.println(this.vertices.get(originI).getValue() + " -(Risco: "
+        + this.edges.get(originI).get(destI) +")-> " 
+        + this.vertices.get(destI).getValue());
       }
 
       return distances[destinationIndex];

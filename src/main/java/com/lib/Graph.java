@@ -15,6 +15,10 @@ public class Graph<T> {
     this.directed = false;
   }
 
+  public ArrayList<Vertex<T>> getVertices() {
+    return vertices;
+  }
+
   public Graph(boolean directed) {
     this.vertices = new ArrayList<>();
     this.edges = new ArrayList<>();
@@ -78,7 +82,7 @@ public class Graph<T> {
   public void displayMatrix() {
     for (ArrayList<Float> row : this.edges) {
       for (float value : row) {
-        System.out.print(value + " ");
+        System.out.print(value + "    ");
       }
       System.out.println();
     }

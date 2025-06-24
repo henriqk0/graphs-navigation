@@ -1,6 +1,7 @@
 package com.lib;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 // TODO: criar uma maneira de printar o grafo a partir dos predecessores, tanto para o dijkstra quanto para a árvore geradora mínima
 public class Graph<T> {
@@ -96,6 +97,14 @@ public class Graph<T> {
     return toBeIterable;
   }
 
+  private int[] toFullIntArray(int lengthArray, int value) {
+    int[] toBeIterable = new int[lengthArray];
+    for (int i = 0; i < lengthArray; i++) {
+      toBeIterable[i] = value;
+    }
+    return toBeIterable;
+  }
+
   public float dijkstra(T origin, T destination) { // assuming that the destination is reachable from the origin vertex
     try {
       int originIndex = getVertexIndex(origin);
@@ -106,7 +115,7 @@ public class Graph<T> {
       }
 
       float[] distances = toFullFloatArray(this.edges.size(), 99999);
-      float[] predecessors = toFullFloatArray(this.edges.size(), 0);
+      int[] predecessors = toFullIntArray(this.edges.size(), 0);
       boolean[] visited = new boolean[this.edges.size()];
 
       distances[originIndex] = 0;
@@ -136,9 +145,25 @@ public class Graph<T> {
           }
         }
 
-        visited[i] = true;
+        visited[i] = true; // TODO: Consertar o loop infinito do while
       }
-      return distances[destinationIndex]; // TODO: ver se é necessário criar uma lista com os vértices final e todos os precedentes até o de origem
+
+      int iPredecessors = destinationIndex;
+      ArrayList<Integer> destinationsOrdered = new ArrayList<>();
+      while (iPredecessors != -1) {
+        destinationsOrdered.add(iPredecessors);
+        iPredecessors = predecessors[iPredecessors];
+      }
+      Collections.reverse(destinationsOrdered);
+
+      System.out.println("Melhor rota de " + origin + " até " + destination + ":");
+      for (int idx = 0; i < destinationsOrdered.size() - 1; i++) {
+        System.out.println(this.vertices.get(destinationsOrdered.get(idx)) + " -(Perigo: "
+        + this.edges.get(destinationsOrdered.get(idx)).get(destinationsOrdered.get(idx+1)) +")->" 
+        + this.vertices.get(destinationsOrdered.get(idx+1)));
+      }
+
+      return distances[destinationIndex];
 
     } catch (Exception e) {
       System.out.println("ERROR: Unable to use this algorithm to inexistent values");

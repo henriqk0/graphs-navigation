@@ -30,6 +30,7 @@ public class Menu {
     Menu.show();
 
     int opt = reader.scannerIntRead("", scanner);
+    RouteManager routeManager = new RouteManager();
 
     while (opt != 0) {
       if (opt > 0 && opt < 6) { // se acharem melhor, podem trocar por um switch-case
@@ -37,15 +38,12 @@ public class Menu {
         Menu.clearConsole();
 
         if (opt == 1) { 
-          RouteManager routeManager = new RouteManager();
 
           int numPorts = reader.scannerIntRead("Quantos portos o mapa vai possuir?", scanner);
 
           routeManager.populatePorts(numPorts);
         }
         else if ( opt == 2 ) { 
-          RouteManager routeManager = new RouteManager();
-
           String portName = reader.scannerStrRead("Digite o nome do destino a ser adicionado:", scanner);
 
           routeManager.addPort(routeManager.generatePort(portName));
@@ -53,7 +51,29 @@ public class Menu {
 
         else if (opt == 3) { }
         else if (opt == 4) { }
-        else  { }
+
+        else  {
+          routeManager.getAllPortNames();
+          String portA = reader.scannerStrRead("Digite o nome da origem:", scanner);
+          String portB = reader.scannerStrRead("Digite o nome do destino:", scanner);
+          
+          while (true) {
+            try {
+              if (routeManager.getPort(portA) == null || routeManager.getPort(portB) == null) {
+                throw new Exception(); 
+              }
+              routeManager.bestPath(routeManager.getPort(portA), routeManager.getPort(portB));
+              
+              break;
+            } catch (Exception e) {
+              if (routeManager.getPort(portA) == null) {
+                portA = reader.scannerStrRead("Porto de origem inexistente. Digite um nome válido:", scanner); }
+              if (routeManager.getPort(portB) == null) {
+                portB = reader.scannerStrRead("Porto de destino inexistente. Digite um nome válido::", scanner);
+              }
+            }
+          }
+        }
       }
       else { System.out.println("Opcao invalida!"); }
 

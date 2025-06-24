@@ -1,9 +1,11 @@
 package com.app.controller;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.app.models.Port;
 import com.lib.Graph;
+import com.lib.Vertex;
 
 public class RouteManager {
   final Random rand = new Random();
@@ -51,6 +53,30 @@ public class RouteManager {
     return p;
   }
 
+  public void getAllPortNames() {
+    ArrayList<Vertex<Port>> ports = this.routes.getVertices();
+    System.out.println("Portos disponíveis:\n");
+    for (int i = 0; i < ports.size(); i++) {
+      System.out.println(ports.get(i).getValue().getName());
+    }
+    System.out.println("");
+  }
+
+  public Port getPort(String portName) {
+    ArrayList<Vertex<Port>> ports = this.routes.getVertices();
+    for (int i = 0; i < ports.size(); i++) {
+      if (ports.get(i).getValue().getName().equals(portName)) {
+        return ports.get(i).getValue();
+      }
+    }
+    return null;
+  }
+  
+  public void bestPath(Port a, Port b) {
+    float bestPathSomatory = this.routes.dijkstra(a, b);
+    System.out.println("Nível total de risco: " + bestPathSomatory);
+  }
+
   public void populatePorts(int numPorts) {
     for (int i = 0; i < numPorts; i++) {
       Port port = this.generatePort();
@@ -63,16 +89,16 @@ public class RouteManager {
   private void populateRoutes(int numPorts){
     Random r = new Random();
     float randomRiskRate;
-    int randomPortOrigin, randomPortDestiny;
 
-    for (int i = 0; i < numPorts*4; i++) {
-      randomRiskRate = 0 + r.nextFloat() * (20 - 0);
-      randomPortOrigin = r.nextInt(numPorts);
-      randomPortDestiny = r.nextInt(numPorts);
+    for (int i = 0; i < numPorts - 1 ; i++) {
 
-      this.routes.addEdge(this.routes.getVertices().get(randomPortOrigin).getValue(),
-                          this.routes.getVertices().get(randomPortDestiny).getValue(),
-                          randomRiskRate);
+      for (int j = i+1; j < numPorts; j++) { 
+        randomRiskRate = 0 + r.nextFloat() * (20 - 0);
+
+        this.routes.addEdge(this.routes.getVertices().get(i).getValue(),
+                            this.routes.getVertices().get(j).getValue(),
+                            randomRiskRate);
+      }
     }
   }
 }

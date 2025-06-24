@@ -51,7 +51,11 @@ public class Menu {
           routeManager.addPort(routeManager.generatePort(portName));
         }
 
-        else if (opt == 3) { }
+        else if (opt == 3) { 
+          RouteManager routeManager = new RouteManager();
+
+          routeManager.getRoutes().displayPaths();
+        }
         else if (opt == 4) { }
         else  { }
       }

@@ -50,8 +50,6 @@ public class Menu {
         }
 
         else if (opt == 3) { 
-          RouteManager routeManager = new RouteManager();
-
           routeManager.getRoutes().displayPaths();
         }
         else if (opt == 4) { }

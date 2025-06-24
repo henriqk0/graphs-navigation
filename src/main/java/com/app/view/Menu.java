@@ -3,6 +3,8 @@ package com.app.view;
 import java.io.IOException;
 import java.util.Scanner;
 
+import com.app.controller.RouteManager;
+
 public class Menu {
 
   public static void show() {
@@ -20,22 +22,35 @@ public class Menu {
     System.out.println("╚═══════════════════════════════╝      «╜      ▀▀▀▀                      ");
   }
 
+
   public static void run() {
     Scanner scanner = new Scanner(System.in);
+    Reader reader = new Reader();
 
-    Menu.show();        
-    int opt = scanner.nextInt();
+    Menu.show();
+
+    int opt = reader.scannerIntRead("", scanner);
 
     while (opt != 0) {
-      if (opt < 0 && opt < 6) {
+      if (opt > 0 && opt < 6) { // se acharem melhor, podem trocar por um switch-case
 
         Menu.clearConsole();
-        if ( opt == 2 ) { 
-          System.out.println("Digite o destino a ser adicionado:");
-        }
-        else if (opt == 1) { 
 
+        if (opt == 1) { 
+          RouteManager routeManager = new RouteManager();
+
+          int numPorts = reader.scannerIntRead("Quantos portos o mapa vai possuir?", scanner);
+
+          routeManager.populatePorts(numPorts);
         }
+        else if ( opt == 2 ) { 
+          RouteManager routeManager = new RouteManager();
+
+          String portName = reader.scannerStrRead("Digite o nome do destino a ser adicionado:", scanner);
+
+          routeManager.addPort(routeManager.generatePort(portName));
+        }
+
         else if (opt == 3) { }
         else if (opt == 4) { }
         else  { }
@@ -43,12 +58,12 @@ public class Menu {
       else { System.out.println("Opcao invalida!"); }
 
       Menu.show();
-      opt = scanner.nextInt();
+      opt = reader.scannerIntRead("", scanner);
     }
+
     scanner.close();
   }
 
-  
   public static void clearConsole() {
     try {
       if (System.getProperty("os.name").contains("Windows")) {

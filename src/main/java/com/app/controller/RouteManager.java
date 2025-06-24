@@ -7,7 +7,7 @@ import com.lib.Graph;
 
 public class RouteManager {
   final Random rand = new Random();
-  private Graph<Port> routes;
+  private Graph<Port> routes = new Graph<>();
 
   public Graph<Port> getRoutes() {
     return routes;
@@ -37,15 +37,18 @@ public class RouteManager {
 
   public Port generatePort(){
     String name = generateRandomPortNames();
-
     return new Port(name);
   }
 
-  public Port generatePort(String nomeProcesso){
-
-    String nome = nomeProcesso;
-
+  public Port generatePort(String portName){
+    String nome = portName;
     return new Port(nome);
+  }
+  
+  public Port addPort(Port p) {
+    this.routes.addVertex(p);
+    System.out.println("Porto " + p + " adicionado com sucesso!");
+    return p;
   }
 
   public void populatePorts(int numPorts) {

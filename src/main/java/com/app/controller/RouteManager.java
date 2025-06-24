@@ -51,7 +51,7 @@ public class RouteManager {
           String origin = reader.readLine();
           String destination = reader.readLine();
           String weightStr = reader.readLine();
-
+          
           float weight = Float.parseFloat(weightStr);
 
           this.routes.addEdge(this.routes.getVertices().get(this.routes.getVertexIndex(new Port (origin))).getValue(), 
@@ -104,6 +104,15 @@ public class RouteManager {
       }
     }
     return null;
+  }
+
+  public void addRoute(Port origin, Port destination, Float weight) {
+    this.routes.addEdge(origin, destination, weight);
+    System.out.println("Rota de " + origin.getName() + " para " + destination.getName() + " adicionada com sucesso!");
+  }
+
+  public boolean hasRoute(Port origin, Port destination) {
+    return this.routes.hasEdge(origin, destination);
   }
   
   public void bestPath(Port a, Port b) {

@@ -17,6 +17,21 @@ public class Port {
 
   @Override
   public String toString() {
-      return  "Nome: " + name;
+      return name;
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+
+    Port other = (Port) obj;
+    return name != null && name.equals(other.name);
+  }
+
+  @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
+    }
+
 }

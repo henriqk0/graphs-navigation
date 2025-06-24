@@ -22,4 +22,18 @@ public class Reader {
       }
     }
   }
+
+  public float scannerFloatRead(String msg, Scanner scn) {
+    String line = scannerStrRead(msg, scn);
+
+    while (true) {
+      try {
+        float num = Float.parseFloat(line);
+        return num;
+      } catch (Exception e) {
+        System.out.println("Quantidade invalida. Digite novamente");
+        line = scn.nextLine();
+      }
+    }
+  }
 }

@@ -80,6 +80,29 @@ public class Graph<T> {
       this.edges.get(destinationIndex).set(originIndex, weight); } // Not directed, then add the path back
   }
 
+  public void setEdge(T origin, T destination, Float weight) {
+    int originIndex = getVertexIndex(origin);
+    int destinationIndex = getVertexIndex(destination);
+
+    if (hasEdge(origin, destination)){
+      this.edges.get(originIndex).set(destinationIndex, weight);
+        if (!this.directed) {
+          this.edges.get(destinationIndex).set(originIndex, weight); // Not directed, then add the path back
+        }
+    }
+  }
+
+  public boolean hasEdge(T origin, T destination) {
+    int originIndex = getVertexIndex(origin);
+    int destinationIndex = getVertexIndex(destination);
+
+    if (originIndex == -1 || destinationIndex == -1) {
+      return false; // One of the vertices does not exist
+    }
+
+    return this.edges.get(originIndex).get(destinationIndex) > 0; // Check if the edge exists
+  }
+
   // Breadth First Search (Busca em Largura)
   public void bfs(){
     boolean visited[] = new boolean[this.vertices.size()];

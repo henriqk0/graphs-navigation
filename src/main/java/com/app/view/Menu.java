@@ -15,13 +15,14 @@ public class Menu {
     System.out.println("╠═══════════════════════════════╣               ▐                        ");
     System.out.println("║      Selecione uma opção:     ║             ░▓▐▓▒░                      ");
     System.out.println("║ ───────────────────────────── ║            ░▒▓▐▓▓▓▒▒░                   ");
-    System.out.println("║   1) Criar um mapa            ║           ░▒▓▓▐▓▓▓▓▓▒▒▒░                       ");
-    System.out.println("║   2) Adicionar um destino     ║          ░▒▒▓▓▐▓▓▓▓▓▓▓▒▒▒░░                       ");
-    System.out.println("║   3) Visualizar mapa          ║    ▀█▄▄▄▄▄    ▐       ▄▄▄▄▄▄▄▄▄           ");
-    System.out.println("║   4) Rota global mais segura  ║     ▀████████████████████████         "); // arvore geradora minima
-    System.out.println("║   5) Melhor caminho A->B      ║       ▀██████████████████▀▀           ");
-    System.out.println("║   0) Sair                     ║      «▓▓▓▀▀██████████▀▀▀                ");
-    System.out.println("╚═══════════════════════════════╝      «╜      ▀▀▀▀                      ");
+    System.out.println("║   1) Criar um mapa            ║           ░▒▓▓▐▓▓▓▓▓▒▒▒░                ");
+    System.out.println("║   2) Adicionar um porto       ║          ░▒▒▓▓▐▓▓▓▓▓▓▓▒▒▒░░             ");
+    System.out.println("║   3) Adicionar uma rota       ║    ▀█▄▄▄▄▄    ▐       ▄▄▄▄▄▄▄▄▄         ");
+    System.out.println("║   4) Visualizar mapa          ║     ▀████████████████████████         ");
+    System.out.println("║   5) Rota global mais segura  ║       ▀██████████████████▀▀           ");
+    System.out.println("║   6) Melhor caminho A->B      ║      «▓▓▓▀▀██████████▀▀▀               ");
+    System.out.println("║   0) Sair                     ║      «╜      ▀▀▀▀                      ");
+    System.out.println("╚═══════════════════════════════╝                                        ");
   }
 
 
@@ -35,14 +36,14 @@ public class Menu {
     RouteManager routeManager = new RouteManager();
 
     while (opt != 0) {
-      if (opt > 0 && opt < 6) { // se acharem melhor, podem trocar por um switch-case
+      if (opt > 0 && opt < 7) { // se acharem melhor, podem trocar por um switch-case
 
         Menu.clearConsole();
 
         if (opt == 1) {
           // If true, reads a file to generate the graph
           // otherwise, generates a random graph 
-          final boolean RANDOM_GRAPH = true;
+          final boolean RANDOM_GRAPH = false;
 
           if (RANDOM_GRAPH){
             int numPorts = reader.scannerIntRead("Quantos portos o mapa vai possuir?", scanner);
@@ -55,15 +56,42 @@ public class Menu {
       
         }
         else if ( opt == 2 ) { 
-          String portName = reader.scannerStrRead("Digite o nome do destino a ser adicionado:", scanner);
+          String portName = reader.scannerStrRead("Digite o nome do porto a ser adicionado:", scanner);
 
           routeManager.addPort(routeManager.generatePort(portName));
         }
 
         else if (opt == 3) { 
+          String originName = reader.scannerStrRead("Digite o nome do porto de origem:", scanner);
+
+          // Verifies if the origin port exists
+          if (routeManager.getPort(originName) != null){
+            String destinationName = reader.scannerStrRead("Digite o nome do porto de destino:", scanner);
+
+            // Verifies if the destination port exists
+            if ((routeManager.getPort(destinationName) != null)) {
+              // Verifies if the origin and destination ports are different
+              if (!originName.equals(destinationName)) {
+                // Verifies if the route already exists
+                // If it does, warns the user about overwriting it
+                if (routeManager.hasRoute(routeManager.getPort(originName), routeManager.getPort(destinationName))){
+                  System.out.println("Rota ja existente. O nivel de risco sera atualizado.");
+                }
+                float riskRate = reader.scannerFloatRead("Digite o nivel de risco da rota:", scanner);
+                routeManager.addRoute(routeManager.getPort(originName), routeManager.getPort(destinationName), riskRate);
+              }
+              else {System.out.println("Porto de origem e destino nao podem ser iguais.");}
+            }
+            else {System.out.println("Porto inexistente.");}
+          }
+          else {System.out.println("Porto inexistente.");}
+        }
+
+        else if (opt == 4) { 
           routeManager.getRoutes().displayPaths();
         }
-        else if (opt == 4) { }
+
+        else if (opt == 5) { }
 
         else  {
           routeManager.getAllPortNames();
@@ -80,9 +108,9 @@ public class Menu {
               break;
             } catch (Exception e) {
               if (routeManager.getPort(portA) == null) {
-                portA = reader.scannerStrRead("Porto de origem inexistente. Digite um nome válido:", scanner); }
+                portA = reader.scannerStrRead("Porto de origem inexistente. Digite um nome valido:", scanner); }
               if (routeManager.getPort(portB) == null) {
-                portB = reader.scannerStrRead("Porto de destino inexistente. Digite um nome válido::", scanner);
+                portB = reader.scannerStrRead("Porto de destino inexistente. Digite um nome valido::", scanner);
               }
             }
           }

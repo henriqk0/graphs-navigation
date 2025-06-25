@@ -187,7 +187,6 @@ public int minIndxPrim(int[] predecessors, float[] weights, boolean[] inTree, in
   return j;
 }
 
-// Prim  -> abuso de:  https://www.geeksforgeeks.org/dsa/prims-minimum-spanning-tree-mst-greedy-algo-5/
 public float minnimalSpanningTree(){
   if (this.edges.isEmpty()) return 0;
 

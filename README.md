@@ -1,6 +1,5 @@
 
-# 🧾 Relatório de Desenvolvimento
-## Biblioteca de Grafos & Aplicativo de Navegação
+# 🧾 Relatório de Desenvolvimento - Biblioteca de Grafos & Aplicativo de Navegação
 
 > **Integrantes (Grupo 4 )**: Gabriel, Guilherme, Henrique, Miguel  
 > **Tecnologia Principal**: Java  
@@ -16,19 +15,43 @@ Este relatório descreve o processo de desenvolvimento de uma biblioteca de graf
 
 ## 🧩 2. Representação de Grafos
 
-> _Descreva aqui a forma de representação adotada, como:_
-- Lista de arestas
-- Lista de adjacências
-- Matriz de adjacências
-- Outras formas
+A implementação da biblioteca de grafos possui duas representações na forma de classes:
+- Vértices (Vertex<T>);
+- Grafos (Graph<T>)
 
-Inclua também trechos de código relevantes com destaques, por exemplo:
+Uma instância de Vertex<T> é um objeto simples que contém um tipo T genérico que representa seu valor, como representado no código abaixo:
+````java
+public class Vertex<T>{
+    private T value;
+    
+    public T getValue(){return this.value;}
+    public void setValue(T v){this.value = v;}
+    
+    
+}
+````
 
-```java
-// Exemplo de representação por lista de adjacências
-Map<String, List<String>> grafo = new HashMap<>();
-grafo.put("A", List.of("B", "C"));
-```
+Uma instância de Graph<T> contém dois atributos:
+- Uma lista dos vértices existentes para o tipo genérico T (do tipo ArrayList<Vertex<T>>);
+- Uma matriz de adjacência (do tipo ArrayList<ArrayList<Float>>);
+- Uma flag para dizer se o grafo é ou não direcionado (do tipo boolean)
+
+O código abaixo mostra a implementação geral da classe Graph<T>: 
+````java
+public class Graph<T>{
+    private final ArrayList<Vertex<T>> vertices; // List of vertices
+    private ArrayList<ArrayList<Float>> edges; // Adjacency matrix to represent edges
+    private boolean directed; // Default is false
+
+    public Graph() {
+        this.vertices = new ArrayList<>();
+        this.edges = new ArrayList<>();
+        this.directed = false;
+    }
+    
+    //Métodos
+}
+````
 
 ---
 
@@ -152,7 +175,7 @@ O(n²)
 
 Essa abordagem é aceitável para grafos **pequenos ou densos**, mas se torna ineficiente em grafos **grandes ou esparsos**.
 
-Para melhorar a eficiência, recomenda-se:
+Para melhorar a eficiência, seria bom:
 
 - Utilizar uma **lista de adjacência** no lugar da matriz;
 - Adotar uma **fila de prioridade** (min-heap) para selecionar o próximo vértice com menor distância;
@@ -318,19 +341,36 @@ A aplicação se utiliza do conceito de grafos e algoritmos para trazer dados in
 - Informar a rota global mais "segura".
 
 ### 📘 Manual de Uso
+Para executar a aplicação, faz-se necessária um IDE como, por exemplo, o JEtBrains IntelliJ.
+Ao extrair o projeto do repositório (link do github no final da documentação), haverá duas pastas separadas no caminho *src/main/java/com:* **app** e **lib**
 
-1. Baixar o projeto
-2. Compilar o código
-3. Executar a aplicação
-4. Interagir com a interface (se houver)
+Ao acessar a pasta **app**, a classe inicial para a execução do programa estará logo na sua raiz; é uma classe chamada **Application**. 
 
-### 💻 Execução
-Exemplo de execução:
+Na execução da classe **Application**, a seguinte interface aparecerá no terminal:
 
 ```bash
-javac Main.java
-java Main
+╔═══════════════════════════════╗                                        
+║           BEM VINDO!          ║          «░░▒▒╗                       
+╠═══════════════════════════════╣               ▐                        
+║      Selecione uma opção:     ║             ░▓▐▓▒░                      
+║ ───────────────────────────── ║            ░▒▓▐▓▓▓▒▒░                   
+║   1) Criar um mapa            ║           ░▒▓▓▐▓▓▓▓▓▒▒▒░                
+║   2) Adicionar um porto       ║          ░▒▒▓▓▐▓▓▓▓▓▓▓▒▒▒░░             
+║   3) Adicionar uma rota       ║    ▀█▄▄▄▄▄    ▐       ▄▄▄▄▄▄▄▄▄         
+║   4) Visualizar mapa          ║     ▀████████████████████████         
+║   5) Rota global mais segura  ║       ▀██████████████████▀▀           
+║   6) Melhor caminho A->B      ║      «▓▓▓▀▀██████████▀▀▀               
+║   0) Sair                     ║      «╜      ▀▀▀▀                      
+╚═══════════════════════════════╝   
 ```
+Ela contém 6 opções (excluindo a opção de sair), assim como representada acima; cada uma responsável por uma funcionalidade específica
+
+1.  Criar um novo mapa (instancia um novo grafo);
+2. Adicionar um porto (instancia um novo vértice ao grafo criado);
+3. Adicionar uma nova rota (define uma aresta entre dois vértices do grafo instanciado);
+4. Visualizar o mapa (Printa uma estrutura do grafo instanciado); 
+5. Informa a rota global mais segura (Define, por meio da Árvore Geradora Mínima, a rota global mais segura de navegação)
+6. Informa o melhor caminho entre dois portos (Define, por meio de Djikstra, o caminho mínimo entre dois vértices do grafo instanciado)
 
 ---
 
@@ -339,6 +379,7 @@ java Main
 Foi utilizado o **Manus** para a criação do template desta documentação e o **ChatGPT** para refino visual e de estrutura. Isto gerou economia de tempo na elaboração e montagem da documentação. 
 
 Embora não se trate de LLM, as explicações e códigos fornecidos pelo site geekforgeeks e pelos slides/videoaulas foram amplamente utilizados na correção e desenvolvimento dos códigos utilizados. Por vezes, dúvidas de sintaxe da linguagem Java foram rapidamente solucionadas pela ferramenta de pesquisa Gemini, agora integrada nas pesquisas comuns do Google.
+
 ---
 
 ## 👥 6. Contribuições Individuais

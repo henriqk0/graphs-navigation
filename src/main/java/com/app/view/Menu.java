@@ -1,11 +1,9 @@
 package com.app.view;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
-
 import com.app.controller.RouteManager;
+
 
 public class Menu {
 
@@ -24,7 +22,6 @@ public class Menu {
     System.out.println("║   0) Sair                     ║      «╜      ▀▀▀▀                      ");
     System.out.println("╚═══════════════════════════════╝                                        ");
   }
-
 
   public static void run() {
     Scanner scanner = new Scanner(System.in);
@@ -91,7 +88,9 @@ public class Menu {
           routeManager.getRoutes().displayPaths();
         }
 
-        else if (opt == 5) { }
+        else if (opt == 5) { 
+          routeManager.bestGlobalRoute();
+        }
 
         else  {
           routeManager.getAllPortNames();

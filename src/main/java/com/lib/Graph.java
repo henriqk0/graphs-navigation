@@ -244,7 +244,7 @@ public class Graph<T> {
 
     else {
       float[] weights = toFullFloatArray(this.edges.size(), 99999);
-      float[] predecessors = toFullFloatArray(this.edges.size(), 0);
+      int[] predecessors = toFullIntArray(this.edges.size(), 0);
       boolean[] itsInTree = new boolean[this.edges.size()];
 
       itsInTree[0] = true;
@@ -252,9 +252,9 @@ public class Graph<T> {
 
       for (int aux = 0; aux < itsInTree.length - 1; aux++) {
 
-        int indx; float minWeight = 99999;
+        float minWeight = 99999;
         int j = 0;
-        for (indx = 0; indx < itsInTree.length; indx++) {
+        for (int indx = 0; indx < itsInTree.length; indx++) {
           if (itsInTree[indx] == false && this.edges.get(aux).get(indx) < minWeight) {
             minWeight = weights[indx];
             j = indx;

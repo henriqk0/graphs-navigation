@@ -118,6 +118,11 @@ public class RouteManager {
     float bestPathSomatory = this.routes.dijkstra(a, b);
     System.out.println(String.format("Nível total de risco: %.2f", bestPathSomatory));
   }
+  
+  public void bestGlobalRoute() {
+    float minGlobalSomatory = this.routes.minnimalSpanningTree();
+    System.out.println(String.format("Nível total de risco ligando todos os portos: %.2f", minGlobalSomatory));
+  }
 
   public void populatePorts(int numPorts) {
     setRoutes(new Graph<Port>());

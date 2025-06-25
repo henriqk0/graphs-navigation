@@ -132,8 +132,17 @@ if (!visited[j] && pathWeight + distances[i] < distances[j]) {
 }
 ```
 
-> **Nota:** A parte responsável por encontrar o próximo vértice `i` com a menor distância ainda não foi incluída no trecho apresentado, mas é essencial para o funcionamento correto do algoritmo de Dijkstra.
+Percorrido todas as arestas que partem de `i`, marcamos o vértice `i` como visitado, obtendo, em seguida o caminho de menor peso dentre os vértices não marcados, para a próxima atualizar o valor de `i` na próxima iteração, para que se faça as verificações restantes: 
 
+```java
+visited[j] 
+for (int j = 0; j < this.edges.size(); j++) { // pick next vertex with minimal distance before destination
+  if (visited[j] == false && distances[j] < minDistance) {
+    minDistance = distances[j];
+    i = j;
+  }
+}
+```
 
 Esta implementação utiliza uma **matriz de adjacência** e uma abordagem de **força bruta** para seleção do próximo vértice. Isso resulta em uma complexidade de tempo:
 
@@ -165,45 +174,59 @@ Segue abaixo o trecho de código que implementa o algoritmo:
 
 
 ````java
-public float minnimalSpanningTree(){
-    if (this.edges.isEmpty()) return 0;
+public int minIndxPrim(int[] predecessors, float[] weights, boolean[] inTree, int row) {
+  float minWeight = 99999;
 
-    else {
-      float[] weights = toFullFloatArray(this.edges.size(), 99999);
-      float[] predecessors = toFullFloatArray(this.edges.size(), 0);
-      boolean[] itsInTree = new boolean[this.edges.size()];
-
-      itsInTree[0] = true;
-      predecessors[0] = -1;
-
-      for (int aux = 0; aux < itsInTree.length - 1; aux++) {
-
-        int indx; float minWeight = 99999;
-        int j = 0;
-        for (indx = 0; indx < itsInTree.length; indx++) {
-          if (itsInTree[indx] == false && this.edges.get(aux).get(indx) < minWeight) {
-            minWeight = weights[indx];
-            j = indx;
-          }
-        }
-
-        itsInTree[j] = true;
-
-        for (int w = 0; w < itsInTree.length; w++) {
-          if (this.edges.get(j).get(w) > 0 && itsInTree[w] == false &&
-            this.edges.get(j).get(w) < weights[w] ) {
-            predecessors[w] = j;
-            weights[w] = this.edges.get(j).get(w);
-          }
-        }
-      }
-
-      float total = 0;
-      for (float wgt : weights) {
-        total += wgt;
-      }
-      return total;
+  int j = 0;
+  for (int indx = 0; indx < inTree.length; indx++) {
+    if (inTree[indx] == false && this.edges.get(row).get(indx) < minWeight) {
+      minWeight = weights[indx];
+      j = indx;
     }
+  }
+  return j;
+}
+
+// Prim  -> abuso de:  https://www.geeksforgeeks.org/dsa/prims-minimum-spanning-tree-mst-greedy-algo-5/
+public float minnimalSpanningTree(){
+  if (this.edges.isEmpty()) return 0;
+
+  else {
+    float[] weights = toFullFloatArray(this.edges.size(), 99999);
+    int[] predecessors = toFullIntArray(this.edges.size(), 0);
+    boolean[] itsInTree = new boolean[this.edges.size()];
+
+    weights[0] = 0;
+    predecessors[0] = -1;
+
+    for (int aux = 0; aux < itsInTree.length - 1; aux++) {
+      int j = minIndxPrim(predecessors, weights, itsInTree, aux);
+
+      itsInTree[j] = true;
+
+      for (int w = 0; w < itsInTree.length; w++) {
+        if (this.edges.get(j).get(w) > 0 && itsInTree[w] == false &&
+          this.edges.get(j).get(w) < weights[w] ) {
+          predecessors[w] = j;
+          weights[w] = this.edges.get(j).get(w);
+        }
+      }
+      itsInTree[j] = true;
+    }
+
+    float total = 0;
+    for (float wgt : weights) {
+      total += wgt;
+    }
+    System.out.println("Rotas:");
+    for (int i = 0; i < weights.length; i++) {
+      if (weights[i] != 0) {
+        System.out.println(this.vertices.get(predecessors[i]).getValue() + " -(Risco: "
+        + weights[i] +")-> " 
+        + this.vertices.get(i).getValue());
+      }
+    }
+    return total;
   }
 }
 ````
@@ -222,7 +245,7 @@ Se houver vértices e arestas, o algoritmo inicializa três vetores auxiliares:
 
 ```java
 float[] weights = toFullFloatArray(this.edges.size(), 99999);
-float[] predecessors = toFullFloatArray(this.edges.size(), 0);
+int[] predecessors = toFullIntArray(this.edges.size(), 0);
 boolean[] itsInTree = new boolean[this.edges.size()];
 
 itsInTree[0] = true;
@@ -316,7 +339,7 @@ java Main
 
 Foi utilizado o **Manus** para a criação do template desta documentação e o **ChatGPT** para refino visual e de estrutura. Isto gerou economia de tempo na elaboração e montagem da documentação. 
 
-
+Embora não se trate de LLM, as explicações e códigos fornecidos pelo site geekforgeeks e pelos slides/videoaulas foram amplamente utilizados na correção e desenvolvimento dos códigos utilizados. Por vezes, dúvidas de sintaxe da linguagem Java foram rapidamente solucionadas pela ferramenta de pesquisa Gemini, agora integrada nas pesquisas comuns do Google.
 ---
 
 ## 👥 6. Contribuições Individuais
@@ -324,9 +347,9 @@ Foi utilizado o **Manus** para a criação do template desta documentação e o 
 | Integrante      | Responsabilidades principais                        |
 |------------------|------------------------------------------------------|
 | Gabriel        | Documentação do projeto;Montagem de arquitetura MVC da aplicação        |
-| Guilherme        | ...                 |
-| Henrique         | ...               |
-| Miguel           | ...                  |
+| Guilherme        | Lib da Matriz de Adjacência e APP                   |
+| Henrique         | Algoritmos Dijaskra, Prim e APP               |
+| Miguel           | APP                   |
 
 ---
 

@@ -275,7 +275,6 @@ public class Graph<T> {
             weights[w] = this.edges.get(j).get(w);
           }
         }
-        itsInTree[j] = true;
       }
 
       float total = 0;

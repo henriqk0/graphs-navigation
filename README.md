@@ -34,8 +34,6 @@ grafo.put("A", List.of("B", "C"));
 
 ## 🧠 3. Algoritmos Clássicos de Grafos
 
-Liste e explique os algoritmos implementados, por exemplo:
-
 ### **Dijkstra**
 
 O método dijkstra(T origin, T destination) implementa o algoritmo de Dijkstra com o objetivo de encontrar o menor custo de caminho entre dois vértices de um grafo ponderado. A premissa do algoritmo é que todas as arestas possuem pesos não negativos. Na implementação abaixo, o método retorna apenas o valor total do caminho mais curto entre os vértices origin e destination, assumindo que o destino é alcançável a partir da origem:

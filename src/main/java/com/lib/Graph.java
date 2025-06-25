@@ -238,6 +238,19 @@ public class Graph<T> {
     return 0;
   }
 
+  public int minIndxPrim(int[] predecessors, float[] weights, boolean[] inTree, int row) {
+    float minWeight = 99999;
+
+    int j = 0;
+    for (int indx = 0; indx < inTree.length; indx++) {
+      if (inTree[indx] == false && this.edges.get(row).get(indx) < minWeight) {
+        minWeight = weights[indx];
+        j = indx;
+      }
+    }
+    return j;
+  }
+
   // Prim  -> abuso de:  https://www.geeksforgeeks.org/dsa/prims-minimum-spanning-tree-mst-greedy-algo-5/
   public float minnimalSpanningTree(){
     if (this.edges.isEmpty()) return 0;
@@ -247,19 +260,11 @@ public class Graph<T> {
       int[] predecessors = toFullIntArray(this.edges.size(), 0);
       boolean[] itsInTree = new boolean[this.edges.size()];
 
-      itsInTree[0] = true;
+      weights[0] = 0;
       predecessors[0] = -1;
 
       for (int aux = 0; aux < itsInTree.length - 1; aux++) {
-
-        float minWeight = 99999;
-        int j = 0;
-        for (int indx = 0; indx < itsInTree.length; indx++) {
-          if (itsInTree[indx] == false && this.edges.get(aux).get(indx) < minWeight) {
-            minWeight = weights[indx];
-            j = indx;
-          }
-        }
+        int j = minIndxPrim(predecessors, weights, itsInTree, aux);
 
         itsInTree[j] = true;
 
@@ -270,11 +275,20 @@ public class Graph<T> {
             weights[w] = this.edges.get(j).get(w);
           }
         }
+        itsInTree[j] = true;
       }
 
       float total = 0;
       for (float wgt : weights) {
         total += wgt;
+      }
+      System.out.println("Rotas:");
+      for (int i = 0; i < weights.length; i++) {
+        if (weights[i] != 0) {
+          System.out.println(this.vertices.get(predecessors[i]).getValue() + " -(Risco: "
+          + weights[i] +")-> " 
+          + this.vertices.get(i).getValue());
+        }
       }
       return total;
     }

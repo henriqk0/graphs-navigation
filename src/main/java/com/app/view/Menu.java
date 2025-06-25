@@ -59,6 +59,7 @@ public class Menu {
         }
 
         else if (opt == 3) { 
+          routeManager.getAllPortNames();
           String originName = reader.scannerStrRead("Digite o nome do porto de origem:", scanner);
 
           // Verifies if the origin port exists
